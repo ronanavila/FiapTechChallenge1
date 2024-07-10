@@ -1,5 +1,5 @@
 ﻿namespace TechChallenge.Domain.Entities;
-public class ContactEntity(string Name, string Email, int DDD, string Phone) : BaseEntity
+public class Contact(string Name, string Email, int DDD, string Phone) : BaseEntity
 {
   public string Name { get; } = Name;
   public string Email { get; } = Email;
