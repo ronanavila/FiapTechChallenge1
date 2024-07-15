@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\TechChallenge.Application\TechChallenge.Application.csproj" />
+    <ProjectReference Include="..\TechChallenge.Infrastructure\TechChallenge.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

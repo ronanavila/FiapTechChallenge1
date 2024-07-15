@@ -1,4 +1,6 @@
-﻿namespace TechChallenge.Domain.Entities;
+﻿using System.Runtime.CompilerServices;
+
+namespace TechChallenge.Domain.Entities;
 public class Contact(string Name, string Email, int DDD, string Phone) : BaseEntity
 {
   public string Name { get; } = Name;
