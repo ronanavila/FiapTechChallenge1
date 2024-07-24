@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TechChallenge.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,23 +30,23 @@ namespace TechChallenge.Infrastructure.Migrations
                     Guid = table.Column<Guid>(type: "UNIQUEIDENTIFIER", nullable: false),
                     Name = table.Column<string>(type: "VARCHAR(150)", nullable: false),
                     Email = table.Column<string>(type: "VARCHAR(150)", nullable: false),
-                    DDD = table.Column<int>(type: "INT", nullable: false),
-                    Phone = table.Column<string>(type: "VARCHAR(10)", nullable: false)
+                    Phone = table.Column<string>(type: "VARCHAR(10)", nullable: false),
+                    RegionDDD = table.Column<int>(type: "INT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contact", x => x.Guid);
                     table.ForeignKey(
-                        name: "FK_Contact_Region_DDD",
-                        column: x => x.DDD,
+                        name: "FK_Contact_Region",
+                        column: x => x.RegionDDD,
                         principalTable: "Region",
                         principalColumn: "DDD");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contact_DDD",
+                name: "IX_Contact_RegionDDD",
                 table: "Contact",
-                column: "DDD");
+                column: "RegionDDD");
         }
 
         /// <inheritdoc />

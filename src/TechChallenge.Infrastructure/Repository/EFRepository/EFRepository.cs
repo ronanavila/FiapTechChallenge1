@@ -17,10 +17,11 @@ public class EFRepository<T> : IRepository<T> where T : BaseEntity
     _dbSet = context.Set<T>();
   }
 
-  public void Update(T entidade)
+  public async Task<T> Update(T entidade)
   {
-    _dbSet.Update(entidade);
-    _context.SaveChanges();
+      _dbSet.Update(entidade);
+    await _context.SaveChangesAsync();
+    return entidade;
   }
 
   public async Task<T> Create(T entidade)
@@ -31,10 +32,13 @@ public class EFRepository<T> : IRepository<T> where T : BaseEntity
     return entidade;
   }
 
-  public async void Delete(Guid guid)
+  public async Task<T> Delete(Guid guid)
   {
-    _dbSet.Remove(await GetById(guid));
-    _context.SaveChanges();
+    var entity = await GetById(guid);
+    _dbSet.Remove(entity);
+   await _context.SaveChangesAsync();
+
+    return entity;
   }
 
   public async Task<T>  GetById(Guid guid)

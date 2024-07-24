@@ -28,9 +28,6 @@ namespace TechChallenge.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("UNIQUEIDENTIFIER");
 
-                    b.Property<int>("DDD")
-                        .HasColumnType("INT");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("VARCHAR(150)");
@@ -43,9 +40,12 @@ namespace TechChallenge.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(10)");
 
+                    b.Property<int>("RegionDDD")
+                        .HasColumnType("INT");
+
                     b.HasKey("Guid");
 
-                    b.HasIndex(new[] { "DDD" }, "IX_Contact_DDD");
+                    b.HasIndex("RegionDDD");
 
                     b.ToTable("Contact", (string)null);
                 });
@@ -66,11 +66,19 @@ namespace TechChallenge.Infrastructure.Migrations
 
             modelBuilder.Entity("TechChallenge.Domain.Entities.Contact", b =>
                 {
-                    b.HasOne("TechChallenge.Domain.Entities.Region", null)
-                        .WithMany()
-                        .HasForeignKey("DDD")
+                    b.HasOne("TechChallenge.Domain.Entities.Region", "Region")
+                        .WithMany("Contacts")
+                        .HasForeignKey("RegionDDD")
                         .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Contact_Region");
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("TechChallenge.Domain.Entities.Region", b =>
+                {
+                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,10 +10,7 @@ internal class ContactConfiguration : IEntityTypeConfiguration<Contact>
     builder.ToTable("Contact");
     builder.HasKey(p => p.Guid);
     builder.Property(p => p.Guid)
-        .HasColumnType("UNIQUEIDENTIFIER");     
-    builder.Property(p => p.DDD)
-                .HasColumnType("INT")
-                .IsRequired();               ;
+        .HasColumnType("UNIQUEIDENTIFIER"); ;
     builder.Property(P => P.Phone)
         .HasColumnType("VARCHAR(10)")
         .IsRequired();
@@ -24,8 +21,13 @@ internal class ContactConfiguration : IEntityTypeConfiguration<Contact>
                 .HasColumnType("VARCHAR(150)")
                 .IsRequired();
 
-    builder.HasIndex(x => x.DDD, "IX_Contact_DDD");
+    builder.HasOne(p => p.Region)
+      .WithMany(x => x.Contacts)
+      .HasConstraintName("FK_Contact_Region")
+      .OnDelete(DeleteBehavior.NoAction);
 
-    builder.HasOne<Region>().WithMany().HasForeignKey("DDD").OnDelete(DeleteBehavior.NoAction);
+    //builder.HasIndex(x => x.DDD, "IX_Contact_DDD");
+
+    //builder.HasOne<Region>().WithMany().HasForeignKey("DDD").OnDelete(DeleteBehavior.NoAction);
   }
 }
