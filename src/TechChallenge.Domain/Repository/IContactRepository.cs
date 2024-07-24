@@ -3,4 +3,5 @@
 namespace TechChallenge.Domain.Repository;
 public interface IContactRepository : IRepository<Contact>
 {
+  Task<Contact> UpdateContact(Contact contact);
 }

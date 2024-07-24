@@ -21,9 +21,12 @@ public class ContactController : ControllerBase
   {
     try
     {
-      var result  = await _contactService.CreateContact(request);
-
-      return Ok(result);
+      var result = await _contactService.CreateContact(request);
+      if (result is not null)
+      {
+        return Ok(result);
+      }
+      return BadRequest();
     }
     catch (Exception ex)
     {
@@ -38,7 +41,49 @@ public class ContactController : ControllerBase
     {
       var result = await _contactService.GetAll();
 
-      return Ok(result);
+      if (result is not null)
+      {
+        return Ok(result);
+      }
+      return BadRequest();
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex);
+    }
+  }
+
+  [HttpDelete("{guid:Guid}")]
+  public async Task<IActionResult> RemoveContact([FromRoute] Guid guid)
+  {
+    try
+    {
+      var result = await _contactService.Delete(guid);
+
+      if (result is not null)
+      {
+        return Ok(result);
+      }
+      return BadRequest();
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex);
+    }
+  }
+
+  [HttpPut()]
+  public async Task<IActionResult> UpdateContact([FromBody] ContactUpdateDTO contactDto)
+  {
+    try
+    {
+      var result = await _contactService.UpdateContact(contactDto);
+
+      if (result is not null)
+      {
+        return Ok(result);
+      }
+      return BadRequest();
     }
     catch (Exception ex)
     {
