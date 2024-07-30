@@ -24,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IContactService, ContactService>();
 builder.Services.AddTransient<IContactRepository, ContactRepository>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

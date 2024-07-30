@@ -22,6 +22,7 @@ public class ContactController : ControllerBase
     try
     {
       var result = await _contactService.CreateContact(request);
+
       if (result is not null)
       {
         return Ok(result);
@@ -40,6 +41,25 @@ public class ContactController : ControllerBase
     try
     {
       var result = await _contactService.GetAll();
+
+      if (result is not null)
+      {
+        return Ok(result);
+      }
+      return BadRequest();
+    }
+    catch (Exception ex)
+    {
+      return BadRequest(ex);
+    }
+  }
+
+  [HttpGet("{ddd:int}")]
+  public async Task<IActionResult> GetContactByRegion([FromRoute] int ddd)
+  {
+    try
+    {
+      var result = await _contactService.GetContactByRegion(ddd);
 
       if (result is not null)
       {

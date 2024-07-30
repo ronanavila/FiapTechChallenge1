@@ -1,4 +1,5 @@
-﻿using TechChallenge.Application.DTO;
+﻿using System.Text.Json;
+using TechChallenge.Application.DTO;
 using TechChallenge.Application.Mapping;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Repository;
@@ -17,8 +18,8 @@ public class ContactService : IContactService
   {
     var contact = ContactMapping.FromCreationDTO(contactDto);
     var contactResponse = await _repository.Create(contact);
-    var contactResponseDto = ContactMapping.ToResponseDTO(contactResponse);
-     return contactResponseDto;
+    ContactResponseDTO? contactResponseDto = ContactMapping.ToResponseDTO(contactResponse);
+    return contactResponseDto;
   }
 
   public async Task<IList<ContactResponseDTO>> GetAll()
@@ -27,7 +28,8 @@ public class ContactService : IContactService
 
     var contatosDtos = new List<ContactResponseDTO>();
 
-    foreach (var contato in contatos) {
+    foreach (var contato in contatos)
+    {
       contatosDtos.Add(ContactMapping.ToResponseDTO(contato));
     }
     return contatosDtos;
@@ -47,4 +49,23 @@ public class ContactService : IContactService
     return contactoResponseDto;
   }
 
+  public async Task<IEnumerable<ContactResponseDTO>> GetContactByRegion(int ddd)
+  {
+
+    var contatosResponseDto = new List<ContactResponseDTO>();
+
+    var contatoResponse = await _repository.GetContactByRegion(ddd);
+
+    if (!contatoResponse.Any())
+    {
+      return contatosResponseDto;
+    }
+
+    foreach (var contato in contatoResponse) {
+      contatosResponseDto.Add(ContactMapping.ToResponseDTO(contato));
+    }
+
+    return contatosResponseDto;
+
+  }
 }

@@ -1,5 +1,4 @@
 ﻿using TechChallenge.Application.DTO;
-using TechChallenge.Domain.Entities;
 
 namespace TechChallenge.Application.Services;
 public interface IContactService
@@ -8,4 +7,5 @@ public interface IContactService
   Task<IList<ContactResponseDTO>> GetAll();
   Task<ContactResponseDTO> Delete(Guid guid);
   Task<ContactResponseDTO> UpdateContact(ContactUpdateDTO contactDto);
+  Task<IEnumerable<ContactResponseDTO>> GetContactByRegion(int ddd);
 }

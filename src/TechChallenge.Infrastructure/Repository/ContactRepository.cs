@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Repository.EFRepository;
+using Microsoft.EntityFrameworkCore;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Repository;
 
@@ -22,5 +23,18 @@ public class ContactRepository : EFRepository<Contact>, IContactRepository
     //_context.Update(oldContact);
     await _context.SaveChangesAsync();
     return contact;
+  }
+
+  public async Task<IEnumerable<Contact>> GetContactByRegion(int ddd)
+  {
+
+    var conctacts = await _context.Contact.Where(x => x.RegionDDD == ddd).ToListAsync();
+
+    if(conctacts is null)
+    {
+      return new List<Contact>();
+    }
+
+    return conctacts;
   }
 }
