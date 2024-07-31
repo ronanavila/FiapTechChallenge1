@@ -22,50 +22,50 @@ public class ContactService : IContactService
     return contactResponseDto;
   }
 
-  public async Task<IList<ContactResponseDTO>> GetAll()
+  public async Task<IList<ContactResponseDTO>> GetAllContacts()
   {
-    var contatos = await _repository.GetAll();
+    var contacts = await _repository.GetAllContacts();
 
-    var contatosDtos = new List<ContactResponseDTO>();
+    var contactsDTO = new List<ContactResponseDTO>();
 
-    foreach (var contato in contatos)
+    foreach (var contact in contacts)
     {
-      contatosDtos.Add(ContactMapping.ToResponseDTO(contato));
+      contactsDTO.Add(ContactMapping.ToResponseDTO(contact));
     }
-    return contatosDtos;
+    return contactsDTO;
   }
   public async Task<ContactResponseDTO> Delete(Guid guid)
   {
-    var contato = await _repository.Delete(guid);
+    var contact = await _repository.Delete(guid);
 
-    return ContactMapping.ToResponseDTO(contato);
+    return ContactMapping.ToResponseDTO(contact);
   }
 
   public async Task<ContactResponseDTO> UpdateContact(ContactUpdateDTO contactDto)
   {
-    var contacto = ContactMapping.FromUpdateDTO(contactDto);
-    var contatoResponse = await _repository.UpdateContact(contacto);
-    var contactoResponseDto = ContactMapping.ToResponseDTO(contatoResponse);
-    return contactoResponseDto;
+    var contact = ContactMapping.FromUpdateDTO(contactDto);
+    var contactResponse = await _repository.UpdateContact(contact);
+    var contactResponseDto = ContactMapping.ToResponseDTO(contactResponse);
+    return contactResponseDto;
   }
 
   public async Task<IEnumerable<ContactResponseDTO>> GetContactByRegion(int ddd)
   {
 
-    var contatosResponseDto = new List<ContactResponseDTO>();
+    var contactResponseDto = new List<ContactResponseDTO>();
 
-    var contatoResponse = await _repository.GetContactByRegion(ddd);
+    var contactResponse = await _repository.GetContactByRegion(ddd);
 
-    if (!contatoResponse.Any())
+    if (!contactResponse.Any())
     {
-      return contatosResponseDto;
+      return contactResponseDto;
     }
 
-    foreach (var contato in contatoResponse) {
-      contatosResponseDto.Add(ContactMapping.ToResponseDTO(contato));
+    foreach (var contact in contactResponse) {
+      contactResponseDto.Add(ContactMapping.ToResponseDTO(contact));
     }
 
-    return contatosResponseDto;
+    return contactResponseDto;
 
   }
 }

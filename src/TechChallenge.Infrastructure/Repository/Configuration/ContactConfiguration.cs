@@ -25,9 +25,5 @@ internal class ContactConfiguration : IEntityTypeConfiguration<Contact>
       .WithMany(x => x.Contacts)
       .HasConstraintName("FK_Contact_Region")
       .OnDelete(DeleteBehavior.NoAction);
-
-    //builder.HasIndex(x => x.DDD, "IX_Contact_DDD");
-
-    //builder.HasOne<Region>().WithMany().HasForeignKey("DDD").OnDelete(DeleteBehavior.NoAction);
   }
 }

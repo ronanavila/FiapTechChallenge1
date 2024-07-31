@@ -40,7 +40,7 @@ public class ContactController : ControllerBase
   {
     try
     {
-      var result = await _contactService.GetAll();
+      var result = await _contactService.GetAllContacts();
 
       if (result is not null)
       {

@@ -3,7 +3,7 @@ public class BaseResponse
 {
   public bool Status { get; private set; }
   public object? Data { get; private set; }
-  public IEnumerable<string>? Errors { get; private set; } = new List<string>();
+  public IEnumerable<string>? Errors { get; private set; }
 
   public static BaseResponse Error(IEnumerable<string>? errors = null)
   {
@@ -14,7 +14,7 @@ public class BaseResponse
     };
   }
 
-  public static BaseResponse Sucsess(object? data = null)
+  public static BaseResponse Success(object? data = null)
   {
     return new BaseResponse()
     {
