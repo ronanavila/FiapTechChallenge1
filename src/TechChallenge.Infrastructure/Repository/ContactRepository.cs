@@ -74,4 +74,13 @@ public class ContactRepository : EFRepository<Contact>, IContactRepository
 
     return conctacts;
   }
+
+  public async Task<Guid> CreateContact(Contact contact)
+  {
+    await _dbSet.AddAsync(contact);
+    await _context.SaveChangesAsync();
+
+    return contact.Guid;
+  }
+
 }

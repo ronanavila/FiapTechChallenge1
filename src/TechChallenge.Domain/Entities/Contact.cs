@@ -7,5 +7,5 @@ public class Contact : BaseEntity
   public string Phone { get; set; } = string.Empty;
   public int RegionDDD { get; set; }
 
-  public virtual Region Region { get; set; } = new Region();
+  public virtual Region? Region { get; set; }
 }

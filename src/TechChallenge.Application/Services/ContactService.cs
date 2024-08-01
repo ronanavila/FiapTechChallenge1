@@ -1,8 +1,10 @@
 ﻿using System.Text.Json;
 using TechChallenge.Application.DTO;
 using TechChallenge.Application.Mapping;
+using TechChallenge.Domain.Contracts;
 using TechChallenge.Domain.Entities;
 using TechChallenge.Domain.Repository;
+using TechChallenge.Domain.Shared;
 
 namespace TechChallenge.Application.Services;
 public class ContactService : IContactService
@@ -14,12 +16,21 @@ public class ContactService : IContactService
     _repository = repository;
   }
 
-  public async Task<ContactResponseDTO> CreateContact(ContactCreationDTO contactDto)
+  public async Task<IResponse> CreateContact(ContactCreationDTO contactDto)
   {
+   
+
+    contactDto.Validate();
+
+    if (!contactDto.IsValid)
+    {
+      return new BaseResponse(false, contactDto.Notifications);
+    }
+
     var contact = ContactMapping.FromCreationDTO(contactDto);
-    var contactResponse = await _repository.Create(contact);
-    ContactResponseDTO? contactResponseDto = ContactMapping.ToResponseDTO(contactResponse);
-    return contactResponseDto;
+    var contactResponse = await _repository.CreateContact(contact);
+
+    return  new BaseResponse(true, "Cadastro realizado.", contactResponse); ;
   }
 
   public async Task<IList<ContactResponseDTO>> GetAllContacts()
@@ -61,7 +72,8 @@ public class ContactService : IContactService
       return contactResponseDto;
     }
 
-    foreach (var contact in contactResponse) {
+    foreach (var contact in contactResponse)
+    {
       contactResponseDto.Add(ContactMapping.ToResponseDTO(contact));
     }
 
