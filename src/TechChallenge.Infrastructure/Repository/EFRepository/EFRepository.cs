@@ -35,6 +35,10 @@ public class EFRepository<T> : IRepository<T> where T : BaseEntity
   public async Task<T> Delete(Guid guid)
   {
     var entity = await GetById(guid);
+    if(entity is null)
+    {
+      return entity;
+    }
     _dbSet.Remove(entity);
    await _context.SaveChangesAsync();
 

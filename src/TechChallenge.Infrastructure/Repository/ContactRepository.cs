@@ -15,6 +15,11 @@ public class ContactRepository : EFRepository<Contact>, IContactRepository
   {
     var oldContact = await GetById(contact.Guid);
 
+    if(oldContact is null)
+    {
+      return new Contact();
+    }
+
     oldContact.Name = contact.Name;
     oldContact.Phone = contact.Phone;
     oldContact.Region = contact.Region;
@@ -24,7 +29,7 @@ public class ContactRepository : EFRepository<Contact>, IContactRepository
     return contact;
   }
 
-  public async Task<IEnumerable<Contact>> GetContactByRegion(int ddd)
+  public async Task<List<Contact>> GetContactByRegion(int ddd)
   {
 
     var conctacts = await _context.Contact
@@ -50,7 +55,7 @@ public class ContactRepository : EFRepository<Contact>, IContactRepository
     return conctacts;
   }
 
-  public async Task<IEnumerable<Contact>> GetAllContacts()
+  public async Task<List<Contact>> GetAllContacts()
   {
 
     var conctacts = await _context.Contact     

@@ -19,95 +19,45 @@ public class ContactController : ControllerBase
   [HttpPost]
   public async Task<IActionResult> CreateContact([FromBody] ContactCreationDTO request)
   {
-    try
-    {
-      var result = await _contactService.CreateContact(request);
 
-      if (result is not null)
-      {
-        return Ok(result);
-      }
-      return BadRequest();
-    }
-    catch (Exception ex)
-    {
-      return BadRequest(ex);
-    }
+    var result = await _contactService.CreateContact(request);
+
+    return StatusCode((int)result.StatusCode, result);
   }
 
   [HttpGet]
   public async Task<IActionResult> GetAll()
   {
-    try
-    {
-      var result = await _contactService.GetAllContacts();
+    var result = await _contactService.GetAllContacts();
 
-      if (result is not null)
-      {
-        return Ok(result);
-      }
-      return BadRequest();
-    }
-    catch (Exception ex)
-    {
-      return BadRequest(ex);
-    }
+    return StatusCode((int)result.StatusCode, result);
   }
 
   [HttpGet("{ddd:int}")]
   public async Task<IActionResult> GetContactByRegion([FromRoute] int ddd)
   {
-    try
-    {
-      var result = await _contactService.GetContactByRegion(ddd);
 
-      if (result is not null)
-      {
-        return Ok(result);
-      }
-      return BadRequest();
-    }
-    catch (Exception ex)
-    {
-      return BadRequest(ex);
-    }
+    var result = await _contactService.GetContactByRegion(ddd);
+
+    return StatusCode((int)result.StatusCode, result);
+
   }
 
   [HttpDelete("{guid:Guid}")]
   public async Task<IActionResult> RemoveContact([FromRoute] Guid guid)
   {
-    try
-    {
-      var result = await _contactService.Delete(guid);
 
-      if (result is not null)
-      {
-        return Ok(result);
-      }
-      return BadRequest();
-    }
-    catch (Exception ex)
-    {
-      return BadRequest(ex);
-    }
+    var result = await _contactService.Delete(guid);
+
+    return StatusCode((int)result.StatusCode, result);
   }
 
   [HttpPut()]
   public async Task<IActionResult> UpdateContact([FromBody] ContactUpdateDTO contactDto)
   {
-    try
-    {
-      var result = await _contactService.UpdateContact(contactDto);
 
-      if (result is not null)
-      {
-        return Ok(result);
-      }
-      return BadRequest();
-    }
-    catch (Exception ex)
-    {
-      return BadRequest(ex);
-    }
+    var result = await _contactService.UpdateContact(contactDto);
+
+    return StatusCode((int)result.StatusCode, result);
   }
 }

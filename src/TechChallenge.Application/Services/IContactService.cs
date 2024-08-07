@@ -5,8 +5,8 @@ namespace TechChallenge.Application.Services;
 public interface IContactService
 {
   Task<IResponse> CreateContact(ContactCreationDTO contactDto);
-  Task<IList<ContactResponseDTO>> GetAllContacts();
-  Task<ContactResponseDTO> Delete(Guid guid);
-  Task<ContactResponseDTO> UpdateContact(ContactUpdateDTO contactDto);
-  Task<IEnumerable<ContactResponseDTO>> GetContactByRegion(int ddd);
+  Task<IResponse> GetAllContacts();
+  Task<IResponse> Delete(Guid guid);
+  Task<IResponse> UpdateContact(ContactUpdateDTO contactDto);
+  Task<IResponse> GetContactByRegion(int ddd);
 }
