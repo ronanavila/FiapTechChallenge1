@@ -32,7 +32,8 @@ var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").B
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+  var connectionString = configuration.GetConnectionString("DefaultConnection");  
+  options.UseSqlServer(connectionString);
   options.UseLazyLoadingProxies();
 }, ServiceLifetime.Scoped);
 

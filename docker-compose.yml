@@ -1,0 +1,41 @@
+name: 'tech-challenge'
+
+services:
+  ms-sql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    hostname: sqlserver
+    environment:
+      SA_PASSWORD: "1q2w3e4r@#@"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+      
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: mssqltools
+    depends_on:
+      ms-sql:
+        condition: service_started   
+    volumes:
+      - ./sql/database.sql:/tmp/database.sql
+      - ./sql/regioes.sql:/tmp/regioes.sql
+      - ./sql/contatos.sql:/tmp/contatos.sql
+      - ./healthy.sql:/tmp/healthy.sql
+      - ./sql/script.sh:/tmp/script.sh
+    command: /bin/bash ./tmp/script.sh
+
+  api: 
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: techchallenge.api
+    environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        ConnectionStrings__DefaultConnection: Server=ms-sql; Database=TechChallenge; User ID=sa; Password=1q2w3e4r@#@; Trusted_Connection=False; TrustServerCertificate=True;
+    depends_on:
+      ms-sql:
+        condition: service_started  
+    ports:
+      - "8080:8080"  
