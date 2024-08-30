@@ -28,11 +28,11 @@ builder.Services.AddSwaggerGen(
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     });
 
-var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  var connectionString = configuration.GetConnectionString("DefaultConnection");  
+  var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+  // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");  
   options.UseSqlServer(connectionString);
   options.UseLazyLoadingProxies();
 }, ServiceLifetime.Scoped);
