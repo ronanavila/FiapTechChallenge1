@@ -31,8 +31,12 @@ builder.Services.AddSwaggerGen(
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-  var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
-  // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");  
+  var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
+    .Build();
+
+  var connectionString = configuration.GetConnectionString("DefaultConnection");
   options.UseSqlServer(connectionString);
   options.UseLazyLoadingProxies();
 }, ServiceLifetime.Scoped);
