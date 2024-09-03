@@ -50,6 +50,13 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana:11.2.0
+    image: grafana/grafana:11.2.0 
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-batman}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-batman}
+      # - GF_AUTH_ANONYMOUS_ENABLED=true
+      # - GF_AUTH_ANONYMOUS_ORG_ROLE=Editor
+    volumes:
+      - ./grafana/provisioning/datasources/default.yaml:/etc/grafana/provisioning/datasources/default.yaml
     ports:
       - 3000:3000
