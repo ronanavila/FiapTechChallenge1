@@ -39,3 +39,17 @@ services:
         condition: service_started  
     ports:
       - "8080:8080"  
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.54.1
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:11.2.0
+    ports:
+      - 3000:3000

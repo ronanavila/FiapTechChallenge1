@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using System.Reflection;
 using TechChallenge.Application.Services;
 using TechChallenge.Domain.Repository;
@@ -26,7 +28,7 @@ builder.Services.AddSwaggerGen(
     });
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-    });
+  });
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -44,8 +46,27 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IContactService, ContactService>();
 builder.Services.AddTransient<IContactRepository, ContactRepository>();
 
+builder.Services.AddOpenTelemetry()
+  .WithMetrics(x =>
+    {
+      x.AddRuntimeInstrumentation()
+        .AddMeter(
+          "Microsoft.AspNetCore.Hosting",
+          "Microsoft.AspNetCore.Server.Kestrel",
+          "System.Net.Http"
+         )
+        .AddPrometheusExporter();
+    })
+  .WithTracing(x =>
+    {
+      x.AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation();
+    }
+);
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -57,7 +78,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.MapPrometheusScrapingEndpoint();
 app.MapControllers();
 
 app.Run();
