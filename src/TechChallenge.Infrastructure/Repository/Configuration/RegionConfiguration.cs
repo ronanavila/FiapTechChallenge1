@@ -15,5 +15,10 @@ internal class RegionConfiguration : IEntityTypeConfiguration<Region>
     builder.Property(P => P.Location)
         .HasColumnType("VARCHAR(100)")
         .IsRequired();
+    builder.HasData(
+      new Region { DDD = 12, Location = "Rio Preto" },
+      new Region { DDD = 19, Location = "Campinas" },
+      new Region { DDD = 11, Location = "São Paulo" }
+      );
   }
 }

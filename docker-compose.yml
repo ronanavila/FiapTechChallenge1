@@ -20,8 +20,8 @@ services:
         condition: service_started   
     volumes:
       - ./sql/database.sql:/tmp/database.sql
-      - ./sql/regioes.sql:/tmp/regioes.sql
-      - ./sql/contatos.sql:/tmp/contatos.sql
+      - ./sql/create.sql:/tmp/create.sql
+      - ./sql/insert.sql:/tmp/insert.sql
       - ./healthy.sql:/tmp/healthy.sql
       - ./sql/script.sh:/tmp/script.sh
     command: /bin/bash ./tmp/script.sh
@@ -33,7 +33,7 @@ services:
     container_name: techchallenge.api
     environment:
         ASPNETCORE_ENVIRONMENT: Development
-        ConnectionStrings__DefaultConnection: Server=ms-sql,1433;Database=TechChallenge;User ID=sa;Password=1q2w3e4r@#@;Trusted_Connection=False; TrustServerCertificate=True;
+        ConnectionStrings__DefaultConnection: Server=ms-sql,1433;Database=TechChallenge;User ID=sa;Password=1q2w3e4r@#\$;Trusted_Connection=False; TrustServerCertificate=True;
     depends_on:
       ms-sql:
         condition: service_started  

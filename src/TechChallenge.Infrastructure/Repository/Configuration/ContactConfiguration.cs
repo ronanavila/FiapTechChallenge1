@@ -25,5 +25,11 @@ internal class ContactConfiguration : IEntityTypeConfiguration<Contact>
       .WithMany(x => x.Contacts)
       .HasConstraintName("FK_Contact_Region")
       .OnDelete(DeleteBehavior.NoAction);
+
+    builder.HasData(
+    new Contact {Guid = Guid.NewGuid(), Name = "Joao", Email = "joao@gmail.com", Phone = "999988888", RegionDDD = 12 },
+    new Contact { Guid = Guid.NewGuid(), Name = "Pedro", Email = "pedro@gmail.com", Phone = "999977778", RegionDDD = 19 },
+    new Contact { Guid = Guid.NewGuid(), Name = "Paulo", Email = "paulo@gmail.com", Phone = "321456888", RegionDDD = 11 }
+  );
   }
 }

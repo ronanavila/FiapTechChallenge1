@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -23,5 +23,8 @@
     <ProjectReference Include="..\TechChallenge.Application\TechChallenge.Application.csproj" />
     <ProjectReference Include="..\TechChallenge.Infrastructure\TechChallenge.Infrastructure.csproj" />
   </ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="TechChallange.IntegrationTests"/>
+	</ItemGroup>
 
 </Project>
