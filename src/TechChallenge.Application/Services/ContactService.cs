@@ -131,7 +131,7 @@ public class ContactService : Notifiable<Notification>, IContactService
         contactResponseDto.Add(ContactMapping.ToResponseDTO(contact));
       }
 
-      return new BaseResponse(HttpStatusCode.OK, true, "Atualização do contato realizada.", contactResponseDto);
+      return new BaseResponse(HttpStatusCode.OK, true, "Consulta executada com sucesso.", contactResponseDto);
     }
     catch
     {

@@ -6,7 +6,7 @@ services:
     container_name: sqlserver
     hostname: sqlserver
     environment:
-      SA_PASSWORD: "1q2w3e4r@#@"
+      SA_PASSWORD: "1q2w3e4r@#$"
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
     ports:
@@ -33,7 +33,7 @@ services:
     container_name: techchallenge.api
     environment:
         ASPNETCORE_ENVIRONMENT: Development
-        ConnectionStrings__DefaultConnection: Server=ms-sql,1433;Database=TechChallenge;User ID=sa;Password=1q2w3e4r@#\$;Trusted_Connection=False; TrustServerCertificate=True;
+        ConnectionStrings__DefaultConnection: Server=ms-sql,1433;Database=TechChallenge;User ID=sa;Password=1q2w3e4r@#$;Trusted_Connection=False; TrustServerCertificate=True;
     depends_on:
       ms-sql:
         condition: service_started  
