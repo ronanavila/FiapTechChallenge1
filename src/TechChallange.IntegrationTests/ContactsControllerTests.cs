@@ -57,7 +57,7 @@ public class ContactsControllerTests
     var application = new ContactsWebApplictionFactory();
     var client = application.CreateClient();
     //Act
-    var response = await client.GetAsync("/api/contacts?ddd=12");
+    var response = await client.GetAsync("/api/contacts/12");
     //Assert
     response.EnsureSuccessStatusCode();
 
@@ -80,7 +80,7 @@ public class ContactsControllerTests
     var guid = getMatchResponse.Data.FirstOrDefault().Guid;
 
     //Act
-    var response = await client.DeleteAsync($"/api/contacts?guid={guid}");
+    var response = await client.DeleteAsync($"/api/contacts/{guid}");
 
     //Assert
     response.EnsureSuccessStatusCode();
